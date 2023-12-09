@@ -1,3 +1,3 @@
 <?
-$MESS["MULTIREGION_SETTINGS_TAB"] = "Мультирегиональность";
+$MESS["MULTIREGION_SETTINGS_TAB"] = "Настройки регионов";
 ?>

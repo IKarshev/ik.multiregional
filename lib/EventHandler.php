@@ -2,7 +2,6 @@
 namespace Ik\Multiregional;
 use Bitrix\Main\Localization\Loc;
 
-
 Class EventHandler{
     public static function OnBuildGlobalMenuHandler(&$arGlobalMenu, &$arModuleMenu){
         global $USER;
@@ -20,7 +19,7 @@ Class EventHandler{
                 [
                     'parent_menu' => 'GlobalMenu_IKMultiregional',
                     'sort'        => 10,
-                    'url'         => '/bitrix/admin/excel_parse.php',
+                    'url'         => '/bitrix/admin/multiregion_settings.php',
                     'text'        => Loc::getMessage('MULTIREGION_SETTINGS_TAB'),
                     'title'       => Loc::getMessage('MULTIREGION_SETTINGS_TAB'),
                     'icon'        => 'fav_menu_icon',

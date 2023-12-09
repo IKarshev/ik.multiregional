@@ -100,8 +100,8 @@ Class Ik_Multiregional extends CModule
 
     function InstallFiles(){
         CopyDirFiles(
-            Application::getDocumentRoot() . '/local/modules//admin/settings/multiregion_settings.php',
-            Application::getDocumentRoot() . '/bitrix/admin/',
+            __DIR__ . '/admin/settings',
+            Application::getDocumentRoot() . '/bitrix/admin',
             true,
             true
         );
