@@ -29,9 +29,11 @@ Class Ik_Multiregional extends CModule
 
     function DoInstall(){
         global $APPLICATION;
+
         $this->InstallDB();
         $this->InstallEvents();
         $this->InstallFiles();
+
         RegisterModule($this->MODULE_ID);
         $APPLICATION->includeAdminFile(
             "Установочное сообщение",
@@ -42,9 +44,11 @@ Class Ik_Multiregional extends CModule
 
     function DoUninstall(){
         global $APPLICATION;
+
         $this->UnInstallDB();
         $this->UnInstallEvents();
         $this->UnInstallFiles();
+
         UnRegisterModule($this->MODULE_ID);
         $APPLICATION->includeAdminFile(
             "Сообщение деинсталяции",
@@ -74,10 +78,35 @@ Class Ik_Multiregional extends CModule
     }
 
     function InstallEvents(){
+        $eventManager = \Bitrix\Main\EventManager::getInstance(); 
+        $eventManager->registerEventHandler(
+            "main",
+            "OnBuildGlobalMenu",
+            $this->MODULE_ID,
+            'Ik\\Multiregional\\EventHandler',
+            'OnBuildGlobalMenuHandler');
+        $eventManager->registerEventHandler(
+            "iblock",
+            "OnAfterIBlockElementAdd",
+            $this->MODULE_ID,
+            'Ik\\Multiregional\\EventHandler',
+            'OnAfterIBlockElementAdd');
         return true;
     }
 
     function UnInstallEvents(){
+        EventManager::getInstance()->unRegisterEventHandler(
+            "main",
+            "OnBuildGlobalMenu",
+            $this->MODULE_ID,
+            'Ik\\Multiregional\\EventHandler',
+            'OnBuildGlobalMenuHandler');
+        EventManager::getInstance()->unRegisterEventHandler(
+            "iblock",
+            "OnAfterIBlockElementAdd",
+            $this->MODULE_ID,
+            'Ik\\Multiregional\\EventHandler',
+            'OnAfterIBlockElementAdd');
         return true;
     }
 
