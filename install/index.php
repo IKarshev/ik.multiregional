@@ -30,11 +30,13 @@ Class Ik_Multiregional extends CModule
     function DoInstall(){
         global $APPLICATION;
 
+        RegisterModule($this->MODULE_ID);
+
         $this->InstallDB();
         $this->InstallEvents();
         $this->InstallFiles();
 
-        RegisterModule($this->MODULE_ID);
+
         $APPLICATION->includeAdminFile(
             "Установочное сообщение",
             __DIR__ . '/instalInfo.php'
@@ -78,20 +80,13 @@ Class Ik_Multiregional extends CModule
     }
 
     function InstallEvents(){
-        $eventManager = \Bitrix\Main\EventManager::getInstance(); 
-        $eventManager->registerEventHandler(
-            "main",
-            "OnBuildGlobalMenu",
+        EventManager::getInstance()->registerEventHandler(
+            'main',
+            'OnBuildGlobalMenu',
             $this->MODULE_ID,
-            'Ik\\Multiregional\\EventHandler',
-            'OnBuildGlobalMenuHandler');
-        $eventManager->registerEventHandler(
-            "iblock",
-            "OnAfterIBlockElementAdd",
-            $this->MODULE_ID,
-            'Ik\\Multiregional\\EventHandler',
-            'OnAfterIBlockElementAdd');
-        return true;
+            'ik\multiregional\EventHandler',
+            'OnBuildGlobalMenuHandler'
+        );
     }
 
     function UnInstallEvents(){
@@ -99,31 +94,24 @@ Class Ik_Multiregional extends CModule
             "main",
             "OnBuildGlobalMenu",
             $this->MODULE_ID,
-            'Ik\\Multiregional\\EventHandler',
+            'ik\\multiregional\\EventHandler',
             'OnBuildGlobalMenuHandler');
-        EventManager::getInstance()->unRegisterEventHandler(
-            "iblock",
-            "OnAfterIBlockElementAdd",
-            $this->MODULE_ID,
-            'Ik\\Multiregional\\EventHandler',
-            'OnAfterIBlockElementAdd');
-        return true;
     }
 
     function InstallFiles(){
-        // CopyDirFiles(
-        //     __DIR__ . '/copy_files/paysistem',
-        //     Application::getDocumentRoot() . '/bitrix/php_interface/include/sale_payment/',
-        //     true,
-        //     true
-        // );
+        CopyDirFiles(
+            Application::getDocumentRoot() . '/local/modules//admin/settings/multiregion_settings.php',
+            Application::getDocumentRoot() . '/bitrix/admin/',
+            true,
+            true
+        );
         return true;
     }
 
     function UnInstallFiles(){
-        // Directory::deleteDirectory(
-        //     Application::getDocumentRoot() . '/bitrix/php_interface/include/sale_payment/sbplevoberezniybank',
-        // );
+        Directory::deleteDirectory(
+            Application::getDocumentRoot() . '/bitrix/admin/multiregion_settings.php',
+        );
         return true;
     }
 }
