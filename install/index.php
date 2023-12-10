@@ -9,6 +9,11 @@ use Bitrix\Main\IO\Directory;
 use Bitrix\Main\Config\Option;
 IncludeModuleLangFile(__FILE__);
 
+// Orm
+use \Ik\Multiregional\Orm\RegionsTable;
+use \Ik\Multiregional\Orm\RegionsVarsTable;
+use \Ik\Multiregional\Orm\RegionsVarsValueTable;
+
 Class Ik_Multiregional extends CModule
 {
 
@@ -60,23 +65,33 @@ Class Ik_Multiregional extends CModule
     }
 
     function InstallDB(){
-        global $DB;
-        $this->errors = false;
-        $this->errors = $DB->RunSQLBatch($_SERVER['DOCUMENT_ROOT'] . "/local/modules/ik.multiregional/install/db/install.sql");
-        if (!$this->errors) {
-            return true;
-        } else
-            return $this->errors;
-    }
+        Loader::includeModule($this->MODULE_ID);
 
+        if (!Application::getConnection()->isTableExists(RegionsTable::getTableName())) {
+            RegionsTable::getEntity()->createDbTable();
+        };
+        if (!Application::getConnection()->isTableExists(RegionsVarsTable::getTableName())) {
+            RegionsVarsTable::getEntity()->createDbTable();
+        }
+        if (!Application::getConnection()->isTableExists(RegionsVarsValueTable::getTableName())) {
+            RegionsVarsValueTable::getEntity()->createDbTable();
+        }
+        return true;
+    }
+    
     function UnInstallDB(){
-        global $DB;
-        $this->errors = false;
-        $this->errors = $DB->RunSQLBatch($_SERVER['DOCUMENT_ROOT'] . "/local/modules/ik.multiregional/install/db/uninstall.sql");
-        if (!$this->errors) {
-            return true;
-        } else
-            return $this->errors;
+        Loader::includeModule($this->MODULE_ID);
+
+        if (Application::getConnection()->isTableExists(RegionsTable::getTableName())) {
+            Application::getConnection()->dropTable(RegionsTable::getTableName());
+        }
+        if (Application::getConnection()->isTableExists(RegionsVarsTable::getTableName())) {
+            Application::getConnection()->dropTable(RegionsVarsTable::getTableName());
+        }
+        if (Application::getConnection()->isTableExists(RegionsVarsValueTable::getTableName())) {
+            Application::getConnection()->dropTable(RegionsVarsValueTable::getTableName());
+        }
+        return true;
     }
 
     function InstallEvents(){
