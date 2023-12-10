@@ -13,5 +13,13 @@ Class Helper{
             return "local";
         };
     }
+    public static function IsFilterItem( array $UI_Filter, string $FilterKey ):bool{
+        foreach ($UI_Filter as $arItem) {
+            if( $arItem["id"] == $FilterKey ){
+                return true;
+            };
+        };
+        return false;
+    }
 }
 ?>
