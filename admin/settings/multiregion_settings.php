@@ -51,7 +51,7 @@ $res = RegionsTable::getList([
 	'order'       => $sort['sort']
 ]);
 ?>
-    <h3><?=Loc::getMessage('GLOBAL_MENU_FILTER_TITLE')?></h2>
+    <h3><?=Loc::getMessage('GLOBAL_MENU_FILTER_TITLE')?></h3>
     <div>
 		<?$APPLICATION->IncludeComponent('bitrix:main.ui.filter', '', [
 			'FILTER_ID' => $list_id,
@@ -65,7 +65,7 @@ $res = RegionsTable::getList([
 
     <hr>
 
-    <h3><?=Loc::getMessage('GLOBAL_MENU_REGION_LIST_TITLE')?></h2>
+    <h3><?=Loc::getMessage('GLOBAL_MENU_REGION_LIST_TITLE')?></h3>
 <?php
 $columns = [];
 $columns[] = ['id' => 'ID', 'name' => 'ID', 'sort' => 'ID', 'default' => true];

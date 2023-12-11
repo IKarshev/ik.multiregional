@@ -25,7 +25,7 @@ Class RegionsVarsTable extends DataManager
             new StringField('NAME', [
                 'required' => true,
             ]),
-            new StringField('Type', [
+            new StringField('TYPE', [
                 'required' => true,
             ]),
         ];
