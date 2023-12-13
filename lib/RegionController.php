@@ -17,6 +17,43 @@ Loader::includeModule('ik.multiregional');
 
 Class RegionController{
 
+    // const DefaultRegionFields = ['ID', 'NAME', 'DOMAIN'];
+    const DefaultRegionFields = array(
+        array(
+            "CODE" => "ID",
+            "NAME" => "ID",
+            "TYPE" => "INTEGER",
+        ),
+        array(
+            "CODE" => "NAME",
+            "NAME" => "Название",
+            "TYPE" => "STRING",
+        ),
+        array(
+            "CODE" => "DOMAIN",
+            "NAME" => "Домен",
+            "TYPE" => "STRING",
+        ),
+    );
+
+    /**
+     * @return array стандартные поля Регионов
+     */
+    public static function GetDefaultRegionFields(){
+        return self::DefaultRegionFields;
+    }
+
+    /**
+     * @return array доп свойства Регионов
+     */
+    public static function GetRegionPropertyFields(){
+        
+        $result = RegionsVarsTable::getList([
+            'select' => ['*'] 
+        ])->fetchAll();
+
+        return $result;
+    }
 
     /**
      * Возвращает переменные регионов
@@ -33,6 +70,7 @@ Class RegionController{
             'select' => [
                 'REGION_ID',
                 'NAME' => 'RegionsVarsTable.NAME',
+                'CODE' => 'RegionsVarsTable.CODE',
                 'TYPE' => 'RegionsVarsTable.TYPE',
                 'VALUE',
             ], 

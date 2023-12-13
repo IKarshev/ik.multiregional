@@ -1,0 +1,162 @@
+.popup-window-with-titlebar .popup-window-content{
+    padding: 0;    
+}
+.popup-window-with-titlebar .popup-window-content{
+    background-color: unset;
+}
+
+
+
+.error_placement{
+    color: #F00;
+    margin-top: 4px;
+}
+
+.form_default .input_cont input[type=text].error, .form_default select.error, .form_default textarea.error{
+    border: 1px solid #F00;
+}
+
+.form_default span, .form_default input, .form_default input::placeholder, .form_default select{
+    font-family: Inter;
+}
+
+.form_default{
+    /* width: 100%; */
+    width: 500px !important;
+    border-radius: 16px;
+}
+
+.form_default .form_head{
+    width: 100%;
+    padding: 0 24px 16px 24px;
+    box-sizing: border-box;
+}
+
+.form_default .form_head .title{
+    font-size: 24px;
+    font-weight: 500;
+}
+
+.form_default .form_body{
+    width: 100%;
+    padding: 8px 24px;
+    box-sizing: border-box;
+}
+
+
+.form_default .input_cont{
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    margin-bottom: 18px;
+    width: 100%;
+}
+
+.form_default .input_cont label{
+    font-size: 14px;
+    font-weight: 500;
+    color: #000;
+    margin-bottom: 4px;
+}
+
+.form_default .input_cont input[type=text]{
+    color: #000;
+    font-size: 16px;
+    font-weight: 400;
+    width: 100%;
+    border: 1px solid #E7E7E7;
+    padding: 8px 8px 8px 16px;
+    border-radius: 12px;
+}
+
+.form_default .input_cont select{
+    font-size: 16px;
+    font-weight: 400;
+    width: 100%;
+    border: 1px solid #E7E7E7;
+    padding: 4px 8px;
+}
+
+.form_default .input_cont.FILE input{
+    width: 0.01px;
+    height: 0.01px;
+    opacity: 0;
+    position: absolute;
+    top: -100%;
+    left: -100%;
+}
+
+.form_default .input_cont.FILE label, form.form_default .input_cont .checkbox_cont label{
+    font-size: 16px;
+    font-weight: 500;
+    margin-bottom: 0;
+    /* color: #000; */
+}
+
+.form_default .input_cont.FILE label{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    padding: 14px 0;
+    background-color: #f1f1f1;
+    border-radius: 12px;
+}
+.form_default .input_cont.FILE label:hover{
+    transition: .3s;
+    background-color: #fff;
+    color: #152DFF;
+}
+
+
+.form_default .input_cont span.title{
+    font-size: 14px;
+    font-weight: 500;
+    margin-bottom: 8px;
+    color: #000;
+}
+
+.form_default .input_cont .checkbox_cont{
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+.form_default .input_cont.CHECKBOX input{
+    margin-right: 10px;
+}
+.form_default .input_cont.CHECKBOX label{
+    margin-bottom: 0;
+}
+.form_default button[type=submit]{
+    width: 100%;
+    padding: 14px 0;
+    display: flex;
+    justify-content: center;
+    background-color: #152DFF;
+    color: #fff;
+    border: none;
+    border-radius: 12px;
+    font-size: 20px;
+    line-height: 28px;
+    font-weight: 500;
+}
+
+.form_default button[type=submit]:-moz-focus-inner, .form_default label:focus{
+    border: none;
+}
+
+.form_default button[type=submit]:hover{
+    background-color: #4456f7;
+    transition: .3s;
+}
+
+.form_default textarea{
+    width: 100%;
+    font-size: 16px;
+    font-weight: 400;
+    resize: none;
+    padding: 8px;
+    border: 1px solid #E7E7E7;
+    border-radius: 12px;
+}

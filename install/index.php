@@ -120,12 +120,21 @@ Class Ik_Multiregional extends CModule
             true,
             true
         );
+        CopyDirFiles(
+            __DIR__ . '/components',
+            Application::getDocumentRoot() . '/bitrix/components',
+            true,
+            true
+        );
         return true;
     }
 
     function UnInstallFiles(){
         Directory::deleteDirectory(
             Application::getDocumentRoot() . '/bitrix/admin/multiregion_settings.php',
+        );
+        Directory::deleteDirectory(
+            Application::getDocumentRoot() . '/bitrix/components/IK',
         );
         return true;
     }
