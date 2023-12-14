@@ -131,8 +131,51 @@ Class RegionController{
      * @return bool Результат операции
      */
     public static function CreateNewRegion( object $Data, array $files = array() ):bool{
-
         
+        // Получаем информацию о полях 
+        foreach (self::GetDefaultRegionFields() as $value) {
+            $regionDefaultFieldList[] = $value["CODE"];
+        };
+        foreach (self::GetRegionPropertyFields() as $value) {
+            $regionVarsFieldList[$value["CODE"]] = $value;
+        };
+        
+        foreach ($Data as $arkey => $arItem) {
+            if( in_array($arkey, $regionDefaultFieldList) ){
+                $RegionDefaultVars[$arkey] = $arItem;
+            };
+            if( array_key_exists($arkey, $regionVarsFieldList) ){
+                $RegionVars[$arkey] = array_merge($regionVarsFieldList[$arkey], [$arkey => $arItem]);
+            };
+        };
+
+        // Создаем регион
+        /*
+        try {
+            $RegionID = RegionsTable::add($RegionDefaultVars)->getId();
+        } catch (\Throwable $th) {
+            return false;
+        }
+        
+        if( !empty($RegionVars) ){
+            try {
+                $RegionsVarsValueRowID = RegionsVarsValueTable::add($RegionVars)->getId();
+            } catch (\Throwable $th) {
+                return false;
+            }
+        }
+        */
+        
+        
+        ob_start();
+        print_r( $regionVarsFieldList );
+        print_r( $Data );
+        print_r( $RegionVars );
+        $debug = ob_get_contents();
+        ob_end_clean();
+        $fp = fopen($_SERVER['DOCUMENT_ROOT'].'/lk-params.log', 'w+');
+        fwrite($fp, $debug);
+        fclose($fp); 
 
         return true;
     }
