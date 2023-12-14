@@ -1,6 +1,6 @@
 <?
 $MESS["IK_MULTIREGIONAL_MODULE_NOT_INSTALLED"] = "Модуль ik.multiregional не установлен.";
-
+$MESS["NO_CLASS_OR_METHOD_PARAMS"] = "Ошибка: не переданны Класс или метод обработчик";
 
 $MESS["ERROR_FILE"] = "Необходимо загрузить файл в поле";
 $MESS["ERROR_STRING"] = "Необходимо заполнить поле";

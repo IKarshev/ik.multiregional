@@ -22,6 +22,22 @@ $(function(){
         );
 
         formPopup.show()
-        
     });
+
+
+    $(`#${form_id}`).on("submit", function(event){
+        event.preventDefault();
+
+        var request = BX.ajax.runComponentAction('IK:form', 'Send_Form', {
+            mode: 'class',
+            data: new FormData( document.getElementById(`${form_id}`) ),
+        }).then(function(response){
+            console.log(response);
+        });
+
+    });
+
+
+
+
 });

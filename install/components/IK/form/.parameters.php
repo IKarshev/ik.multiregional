@@ -12,11 +12,8 @@ $arComponentParameters = array(
         "BASE" => array(
             "NAME" => "основные настройки",
         ),
-        "PROPS" => array(
-            "NAME" => "Свойства",
-        ),
-        "SAVE_SETTINGS" => array(
-            "NAME" => "Настройки отправки",
+        "EVENT_SETTINGS" => array(
+            "NAME" => "Обработка результата",
         ),
     ),
     "PARAMETERS" => array(
@@ -30,6 +27,16 @@ $arComponentParameters = array(
             "NAME" => "Выводить форму в pop-up`е ?",
             "TYPE" => "CHECKBOX",
             "REFRESH" => "Y",
+        ),
+        "TARGET_CLASS" => array(
+            "PARENT" => "EVENT_SETTINGS",
+            "NAME" => "Класс-обработчик",
+            "TYPE" => "STRING",
+        ),
+        "TARGET_METHOD" => array(
+            "PARENT" => "EVENT_SETTINGS",
+            "NAME" => "Метод-обработчик",
+            "TYPE" => "STRING",
         ),
     ),
 );

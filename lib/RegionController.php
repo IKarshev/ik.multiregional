@@ -122,5 +122,20 @@ Class RegionController{
         return $Regions;
     }
 
+    /**
+     * Метод создает новый регион
+     * 
+     * @param object $Data Bitrix\Main\Type\ParameterDictionary : post запрос из формы
+     * @param array $files : Данные файлов
+     * 
+     * @return bool Результат операции
+     */
+    public static function CreateNewRegion( object $Data, array $files = array() ):bool{
+
+        
+
+        return true;
+    }
+
 
 }

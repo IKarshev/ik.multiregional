@@ -114,37 +114,30 @@ class FormComponent extends CBitrixComponent implements Controllerable{
         // Получаем параметры компонента из сессии
         $this->arParams = $_SESSION['arParams'];
 
-        
-        $PROP = array();
-        // Валидация текстовых полей
-        foreach ($post as $arkey => $arItem) {
-            if( $arItem != "" ){// Проверяем пустые массивы
-                if( is_array($arItem) ){
-                    foreach ($arItem as $key => $value) {
-                        $PROP[$arkey][] = $this->validate_string( $value );
-                    };
-                } else{// Валидация ключей массивов (списки)
-                    $i = false;
-                    foreach ($this->arParams["filed_data"] as $paramkey => $paramItem) {
-                        if( $paramItem["PROPERTY_TYPE"] == "TEXT_AREA" && $paramItem["CODE"] == $arkey ){
-                            $PROP[$arkey] = array( "VALUE" => array(
-                                "TEXT" => $this->validate_string( $arItem ),
-                                "TYPE" => "text",
-                            ));
-                            $i = true;
-                            break;
-                        };
-                    };
-                    if( !$i ){
-                        $PROP[$arkey] = $this->validate_string( $arItem );
-                    };
-
-                };
-            };
+        try {
+            if( !isset($this->arParams["TARGET_CLASS"], $this->arParams["TARGET_METHOD"]) ){
+                throw new Exception(Loc::getMessage('NO_CLASS_OR_METHOD_PARAMS'));
+            }
+        } catch (Exception $e) {
+            return $e->getMessage();
+            die();
         };
+
+
+        $class_name = $this->arParams["TARGET_CLASS"];
+        $method_name = $this->arParams["TARGET_METHOD"];
+
+        if (class_exists($class_name) && method_exists($class_name, $method_name)) {
+            // Вызываем статический метод
+            $result = call_user_func([$class_name, $method_name], $post);
+
+            return $result;
+        } else {
+            echo "Класс или метод не существует.";
+        };
+
 
 
         
     } 
-
 }
