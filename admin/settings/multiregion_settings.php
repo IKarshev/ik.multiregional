@@ -12,8 +12,11 @@ use Ik\Multiregional\Orm\RegionsTable;
 use Ik\Multiregional\Orm\RegionsVarsTable;
 use Ik\Multiregional\Orm\RegionsVarsValueTable;
 
+use Ik\Multiregional\RegionController;
 // require modules
 Loader::includeModule('ik.multiregional');
+
+$RegionController = new RegionController;
 
 // settings
 $APPLICATION->SetTitle( Loc::getMessage('GLOBAL_MENU_TAB_NAME') );
@@ -41,15 +44,15 @@ foreach ($filterData as $k => $v) {
     }
 }
 
-$res = RegionsTable::getList([
-	'filter' => $filter,
-	'select' => [
-		"*",
-	],
-	'offset'      => $nav->getOffset(),
-	'limit'       => $nav->getLimit(),
-	'order'       => $sort['sort']
-]);
+// $res = RegionsTable::getList([
+// 	'filter' => $filter,
+// 	'select' => [
+// 		"*",
+// 	],
+// 	'offset'      => $nav->getOffset(),
+// 	'limit'       => $nav->getLimit(),
+// 	'order'       => $sort['sort']
+// ]);
 ?>
     <h3><?=Loc::getMessage('GLOBAL_MENU_FILTER_TITLE')?></h3>
     <div>
@@ -65,38 +68,60 @@ $res = RegionsTable::getList([
 
     <hr>
 
-    <h3><?=Loc::getMessage('GLOBAL_MENU_REGION_LIST_TITLE')?></h3>
-<?php
-$columns = [];
-$columns[] = ['id' => 'ID', 'name' => 'ID', 'sort' => 'ID', 'default' => true];
-$columns[] = ['id' => 'NAME', 'name' => 'Название', 'sort' => 'NAME', 'default' => true];
-$columns[] = ['id' => 'DOMAIN', 'name' => 'Домен', 'sort' => 'DOMAIN', 'default' => true];
+	<div class="row space-between" style="margin:8px 0px;">
+		<h3><?=Loc::getMessage('GLOBAL_MENU_REGION_LIST_TITLE')?></h3>
+		<?$APPLICATION->IncludeComponent(
+			"IK:form",
+			"",
+			Array(
+				"DRAGGABLE" => "Y",
+				"FORM_TITLE" => "Добавление региона",
+				"POPUP" => "Y",
+				"POPUP_BTN_TITLE" => "Добавить регион",
+				"RESIZABLE" => "Y",
+				"FIELDS" => RegionController::GetAllRegionFields(),
+				"TARGET_CLASS" => "Ik\\Multiregional\\RegionController",
+				"TARGET_METHOD" => "CreateNewRegion",
+			)
+		);?>
+	</div>
 
-foreach ($res->fetchAll() as $row) {
-	$list[] = [
-		'data' => [
-			"ID" => $row['ID'],
-			"NAME" => $row['NAME'],
-			"DOMAIN" => $row['DOMAIN'],
-		],
-		'actions' => [
+<?php
+// Получаем колонки
+foreach (RegionController::GetAllRegionFields() as $columnItem) {
+	$columns[] = array(
+		"id" => $columnItem["CODE"],
+		"name" => $columnItem["NAME"],
+		"sort" => $columnItem["CODE"],
+		"default" => true,
+	);
+}	
+
+// Получаем данные для таблицы
+$RegionData = $RegionController->GetRegionData();
+
+foreach ($RegionData as $arkey => &$arItem) {
+	$RegionDataList[] = array(
+		'data' => $arItem,
+		'actions' => array(
 			[
 				'text'    => 'Просмотр',
 				'default' => true,
-				'onclick' => 'document.location.href="?op=view&id='.$row['ID'].'"'
-			], [
+				'onclick' => ''
+			],[
 				'text'    => 'Удалить',
 				'default' => true,
-				'onclick' => 'if(confirm("Точно?")){document.location.href="?op=delete&id='.$row['ID'].'"}'
+				'onclick' => ''
 			]
-		]
-	];
-}
+		),
+	);
+};
+
 
 $APPLICATION->IncludeComponent('bitrix:main.ui.grid', '', [
 	'GRID_ID' => $list_id,
 	'COLUMNS' => $columns,
-	'ROWS' => $list,
+	'ROWS' => $RegionDataList,
 	'SHOW_ROW_CHECKBOXES' => false,
 	'NAV_OBJECT' => $nav,
 	'AJAX_MODE' => 'Y',
@@ -124,5 +149,17 @@ $APPLICATION->IncludeComponent('bitrix:main.ui.grid', '', [
 	'AJAX_OPTION_HISTORY'       => 'N'
 ]);
 ?>
+
+<style>
+	.row{
+		display: flex;
+		flex-direction: row;
+	}
+	.space-between{
+		width: 100%;
+		justify-content: space-between;
+		align-items: center;
+	}
+</style>
 
 <?require($_SERVER["DOCUMENT_ROOT"]."/bitrix/modules/main/include/epilog_admin.php");?>

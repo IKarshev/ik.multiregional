@@ -160,3 +160,18 @@
     border: 1px solid #E7E7E7;
     border-radius: 12px;
 }
+
+.open_popup{
+    text-decoration: none;
+    background-color: #5a9aeb;
+    color: #fff;
+    padding: 16px 8px;
+    border-radius: 8px;
+}
+.open_popup:hover{
+    transition: .3s;
+    text-decoration: none;
+    background-color: unset;
+    color: #5a9aeb;
+    border: 1px solid #5a9aeb;;
+}

@@ -20,18 +20,21 @@ Class RegionController{
     // const DefaultRegionFields = ['ID', 'NAME', 'DOMAIN'];
     const DefaultRegionFields = array(
         array(
+            "ID" => "ID",
             "CODE" => "ID",
             "NAME" => "ID",
             "TYPE" => "INTEGER",
             "IS_REQUIRED" => 1,
         ),
         array(
+            "ID" => "NAME",
             "CODE" => "NAME",
             "NAME" => "Название",
             "TYPE" => "STRING",
             "IS_REQUIRED" => 1,
         ),
         array(
+            "ID" => "DOMAIN",
             "CODE" => "DOMAIN",
             "NAME" => "Домен",
             "TYPE" => "STRING",
@@ -56,6 +59,16 @@ Class RegionController{
         ])->fetchAll();
 
         return $result;
+    }
+
+    /**
+     * @return array Все поля регионов
+     */
+    public static function GetAllRegionFields(){
+        return array_merge(
+            self::GetDefaultRegionFields(),
+            self::GetRegionPropertyFields(),
+        );
     }
 
     /**
