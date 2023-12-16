@@ -2,7 +2,7 @@
 
 
 <?if( $arParams["POPUP"]=="Y" ):?>
-    <a href="" class="open_popup" data-popup="Popup_<?=$arResult['form_id']?>"><?=$arParams['POPUP_BTN_TITLE']?></a>
+    <a href="" class="ui-btn-main open_popup" data-popup="Popup_<?=$arResult['form_id']?>"><?=$arParams['POPUP_BTN_TITLE']?></a>
 <?endif;?>
 
 <div id="Popup_<?=$arResult['form_id']?>" class="form form_default" <?=($arParams["POPUP"]=="Y") ? "style='display:none'" : ""?> >

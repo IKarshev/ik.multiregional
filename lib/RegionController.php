@@ -111,8 +111,8 @@ Class RegionController{
      * 
      * @return array
      */
-    public function GetRegionData( array $RegionID = [] ):array{
-        $filter = ( !empty($RegionID) ) ? ["=ID" => $RegionID] : [] ;
+    public function GetRegionData( array $filter = [] ):array{
+        // $filter = ( !empty($RegionID) ) ? ["=ID" => $RegionID] : [] ;
 
         $Regions = RegionsTable::getList([
             'filter' => $filter,
@@ -123,11 +123,10 @@ Class RegionController{
             $RegionID[] = $reg["ID"];
         };
         
-        $RegionData = $this->GetRigionValues($RegionID);
-
         foreach ($Regions as $Regionkey => $regionDefaultData) {
             $regionID = $regionDefaultData["ID"];
             
+            $RegionData = $this->GetRigionValues( [$regionDefaultData["ID"]] );
             foreach ($RegionData as $RegionDataValue) {
                 if( $RegionDataValue["REGION_ID"] == $regionID ){
                     $Regions[$Regionkey][$RegionDataValue["CODE"]] = $RegionDataValue["VALUE"];
@@ -189,19 +188,38 @@ Class RegionController{
                 return false;
             }
         }
-        
-        ob_start();
-        // print_r( $regionVarsFieldList );
-        // print_r( $Data );
-        print_r( $RegionVars );
-        print_r( $RegionsVarsValueRowID );
-        $debug = ob_get_contents();
-        ob_end_clean();
-        $fp = fopen($_SERVER['DOCUMENT_ROOT'].'/lk-params.log', 'w+');
-        fwrite($fp, $debug);
-        fclose($fp); 
-
         return true;
+    }
+
+    /**
+     * @return array корректный массив фильтров для регионов
+     */
+    public static function GetCorrectRegionUIFilter():array{
+        $filterArr = self::GetAllRegionFields();
+
+        foreach ($filterArr as &$arItem) {
+            
+            $type="";
+            switch ($arItem["TYPE"]) {
+                case 'STRING':
+                    $type="string";
+                    break;
+                case 'INTEGER':
+                    $type="number";
+                    break;
+            }            
+            
+            $arItem = array(
+                "id" => $arItem["CODE"],
+                "name" => $arItem["NAME"],
+                "type" => $type,
+                "default" => true,
+            );
+        }
+
+
+        return $filterArr;
+
     }
 
 

@@ -15,18 +15,15 @@ use Ik\Multiregional\Orm\RegionsVarsValueTable;
 use Ik\Multiregional\RegionController;
 // require modules
 Loader::includeModule('ik.multiregional');
-
 $RegionController = new RegionController;
+$RegionFields = $RegionController::GetAllRegionFields();
+$FilterArray = $RegionController->GetCorrectRegionUIFilter();
 
-// settings
+// settings/filter
 $APPLICATION->SetTitle( Loc::getMessage('GLOBAL_MENU_TAB_NAME') );
 $list_id = 'RegionList';
 $grid_options = new GridOptions($list_id);
 $sort = $grid_options->GetSorting(['sort' => ['ID' => 'DESC'], 'vars' => ['by' => 'by', 'order' => 'order']]);
-$UI_Filter = [
-	['id' => 'NAME', 'name' => 'Название', 'type'=>'text', 'default' => true],
-	['id' => 'DOMAIN', 'name' => 'Домен', 'type'=>'text', 'default' => true],
-];
 
 $nav_params = $grid_options->GetNavParams();
 $nav = new PageNavigation('request_list');
@@ -36,30 +33,29 @@ $nav->allowAllRecords(true)
 
 $filterOption = new Bitrix\Main\UI\Filter\Options($list_id);
 $filterData = $filterOption->getFilter([]);
-$filter = [];
 
-foreach ($filterData as $k => $v) {
-    if( Helper::IsFilterItem( $UI_Filter, $k ) ){
-        $filter[$k] = "%".$filterData[$k]."%";
-    }
-}
 
-// $res = RegionsTable::getList([
-// 	'filter' => $filter,
-// 	'select' => [
-// 		"*",
-// 	],
-// 	'offset'      => $nav->getOffset(),
-// 	'limit'       => $nav->getLimit(),
-// 	'order'       => $sort['sort']
-// ]);
+if( !empty($filterData) ){
+	foreach ($filterData as $k => $v) {
+		if( Helper::IsFilterItem( $FilterArray, $k ) ){
+			$CorrectFilterData = Helper::GetCorrectFilter($k, $filterData[$k]);
+
+			if( is_array($CorrectFilterData) ){
+				$filter[ $CorrectFilterData['CorrectFilterName'] ] = $CorrectFilterData['CorrectFilterValue'];
+			};
+		}
+	}
+};
+if( !isset($filter) || empty($filter) ) $filter = array();
+
+$RegionData = $RegionController->GetRegionData($filter);
 ?>
     <h3><?=Loc::getMessage('GLOBAL_MENU_FILTER_TITLE')?></h3>
     <div>
 		<?$APPLICATION->IncludeComponent('bitrix:main.ui.filter', '', [
 			'FILTER_ID' => $list_id,
 			'GRID_ID' => $list_id,
-			'FILTER' => $UI_Filter,
+			'FILTER' => $FilterArray,
 			'ENABLE_LIVE_SEARCH' => true,
 			'ENABLE_LABEL' => true
 		]);?>
@@ -79,7 +75,7 @@ foreach ($filterData as $k => $v) {
 				"POPUP" => "Y",
 				"POPUP_BTN_TITLE" => "Добавить регион",
 				"RESIZABLE" => "Y",
-				"FIELDS" => RegionController::GetAllRegionFields(),
+				"FIELDS" => $RegionFields,
 				"TARGET_CLASS" => "Ik\\Multiregional\\RegionController",
 				"TARGET_METHOD" => "CreateNewRegion",
 			)
@@ -88,7 +84,7 @@ foreach ($filterData as $k => $v) {
 
 <?php
 // Получаем колонки
-foreach (RegionController::GetAllRegionFields() as $columnItem) {
+foreach ($RegionFields as $columnItem) {
 	$columns[] = array(
 		"id" => $columnItem["CODE"],
 		"name" => $columnItem["NAME"],
@@ -98,8 +94,6 @@ foreach (RegionController::GetAllRegionFields() as $columnItem) {
 }	
 
 // Получаем данные для таблицы
-$RegionData = $RegionController->GetRegionData();
-
 foreach ($RegionData as $arkey => &$arItem) {
 	$RegionDataList[] = array(
 		'data' => $arItem,
