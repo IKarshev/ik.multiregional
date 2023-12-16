@@ -20,7 +20,7 @@
                         
                         <div class="input_cont <?=$arItem["PROPERTY_TYPE"];?>">
                             <label for="<?=$arItem["CODE"]?>" id="<?=$arItem["CODE"]?>"><?=$arItem["NAME"]?></label>
-                            <input <?//=($arItem["IS_REQUIRED"]=='Y')?"required":""?> data-mask="<?//=$arItem["MASK"]?>" name="<?=$arItem["CODE"]?>" type="text" placeholder="Введите <?=$arItem["NAME"]?>">
+                            <input <?=($arItem["IS_REQUIRED"])?"required":""?> data-mask="<?//=$arItem["MASK"]?>" name="<?=$arItem["CODE"]?>" type="text" placeholder="Введите <?=$arItem["NAME"]?>">
                             <div class="error_placement"></div>
                         </div>     
                         
@@ -29,7 +29,7 @@
 
                         <div class="input_cont <?=$arItem["PROPERTY_TYPE"];?>">
                             <label for="<?=$arItem["CODE"]?>"><?=$arItem["NAME"]?></label>
-                            <select name="<?=$arItem["CODE"]?>" id="<?=$arItem["CODE"]?>">
+                            <select <?=($arItem["IS_REQUIRED"])?"required":""?> name="<?=$arItem["CODE"]?>" id="<?=$arItem["CODE"]?>">
                                 <option value="" selected disabled>Выберите пункт</option>
 
                                 <?foreach ($arItem["LIST_ITEMS"] as $ListKey => $ListItem):?>
@@ -45,7 +45,7 @@
                         <div class="input_cont <?=$arItem["PROPERTY_TYPE"];?>">
                             <span class="title"><?=$arItem["NAME"]?></span>
                             <label for="<?=$arItem["CODE"]?>" >выберите файл</label>
-                            <input type="file" name="<?=$arItem["CODE"]?><?=($arItem["MULTIPLE"] == "Y")? '[]' : ''?>" id="<?=$arItem["CODE"]?>" <?=($arItem["MULTIPLE"] == "Y")? 'multiple' : ''?>>
+                            <input <?=($arItem["IS_REQUIRED"])?"required":""?> type="file" name="<?=$arItem["CODE"]?><?=($arItem["MULTIPLE"] == "Y")? '[]' : ''?>" id="<?=$arItem["CODE"]?>" <?=($arItem["MULTIPLE"] == "Y")? 'multiple' : ''?>>
                             <div class="error_placement"></div>
                         </div>
                     
@@ -70,7 +70,7 @@
                         
                         <div class="input_cont <?=$arItem["PROPERTY_TYPE"];?>">
                             <label for="<?=$arItem["CODE"]?>"><?=$arItem["NAME"]?></label>
-                            <textarea id="<?=$arItem["CODE"]?>" <?=($arItem["IS_REQUIRED"]=='Y')?"required":""?> data-mask="<?=$arItem["MASK"]?>" name="<?=$arItem["CODE"]?>" type="text" placeholder="Введите <?=$arItem["NAME"]?>"></textarea>
+                            <textarea id="<?=$arItem["CODE"]?>" <?=($arItem["IS_REQUIRED"])?"required":""?> data-mask="<?=$arItem["MASK"]?>" name="<?=$arItem["CODE"]?>" type="text" placeholder="Введите <?=$arItem["NAME"]?>"></textarea>
                             <div class="error_placement"></div>
                         </div>      
             

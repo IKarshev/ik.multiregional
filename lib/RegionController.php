@@ -23,16 +23,19 @@ Class RegionController{
             "CODE" => "ID",
             "NAME" => "ID",
             "TYPE" => "INTEGER",
+            "IS_REQUIRED" => 1,
         ),
         array(
             "CODE" => "NAME",
             "NAME" => "Название",
             "TYPE" => "STRING",
+            "IS_REQUIRED" => 1,
         ),
         array(
             "CODE" => "DOMAIN",
             "NAME" => "Домен",
             "TYPE" => "STRING",
+            "IS_REQUIRED" => 1,
         ),
     );
 
@@ -114,7 +117,7 @@ Class RegionController{
             
             foreach ($RegionData as $RegionDataValue) {
                 if( $RegionDataValue["REGION_ID"] == $regionID ){
-                    $Regions[$Regionkey][$RegionDataValue["NAME"]] = $RegionDataValue["VALUE"];
+                    $Regions[$Regionkey][$RegionDataValue["CODE"]] = $RegionDataValue["VALUE"];
                 };
             };
         };
@@ -132,45 +135,53 @@ Class RegionController{
      */
     public static function CreateNewRegion( object $Data, array $files = array() ):bool{
         
-        // Получаем информацию о полях 
+        // Получаем стандартные поля Регионов
         foreach (self::GetDefaultRegionFields() as $value) {
             $regionDefaultFieldList[] = $value["CODE"];
         };
         foreach (self::GetRegionPropertyFields() as $value) {
             $regionVarsFieldList[$value["CODE"]] = $value;
         };
-        
+        // Получаем доп. поля Регионов
         foreach ($Data as $arkey => $arItem) {
             if( in_array($arkey, $regionDefaultFieldList) ){
                 $RegionDefaultVars[$arkey] = $arItem;
             };
             if( array_key_exists($arkey, $regionVarsFieldList) ){
-                $RegionVars[$arkey] = array_merge($regionVarsFieldList[$arkey], [$arkey => $arItem]);
+                $RegionVars[$arkey] = array_merge($regionVarsFieldList[$arkey], ["VALUE" => $arItem]);
             };
         };
 
         // Создаем регион
-        /*
+        /**/
         try {
             $RegionID = RegionsTable::add($RegionDefaultVars)->getId();
         } catch (\Throwable $th) {
             return false;
         }
         
-        if( !empty($RegionVars) ){
+        if( !empty($RegionVars) && ( isset($RegionID) && $RegionID!="") ){
             try {
-                $RegionsVarsValueRowID = RegionsVarsValueTable::add($RegionVars)->getId();
+                foreach ($RegionVars as $regionData) {
+                    RegionsVarsValueTable::add(
+                        array(
+                            "REGION_ID" => $RegionID,
+                            "REGION_VALUE_ID" => $regionData["ID"],
+                            "VALUE" => $regionData["VALUE"],
+                        )
+                    )->getId();
+                }
+
             } catch (\Throwable $th) {
                 return false;
             }
         }
-        */
-        
         
         ob_start();
-        print_r( $regionVarsFieldList );
-        print_r( $Data );
+        // print_r( $regionVarsFieldList );
+        // print_r( $Data );
         print_r( $RegionVars );
+        print_r( $RegionsVarsValueRowID );
         $debug = ob_get_contents();
         ob_end_clean();
         $fp = fopen($_SERVER['DOCUMENT_ROOT'].'/lk-params.log', 'w+');

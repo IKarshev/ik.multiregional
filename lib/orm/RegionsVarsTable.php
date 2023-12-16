@@ -5,6 +5,7 @@ use Bitrix\Main\Localization\Loc;
 use Bitrix\Main\Entity\DataManager;
 use Bitrix\Main\Entity\IntegerField;
 use Bitrix\Main\Entity\StringField;
+use Bitrix\Main\Entity\BooleanField;
 
 Class RegionsVarsTable extends DataManager
 {
@@ -30,6 +31,10 @@ Class RegionsVarsTable extends DataManager
             ]),
             new StringField('TYPE', [
                 'required' => true,
+            ]),
+            new BooleanField('IS_REQUIRED', [
+                'required' => false,
+                'values' => ["1", '0'],
             ]),
         ];
     }
