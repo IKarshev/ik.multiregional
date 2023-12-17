@@ -35,19 +35,7 @@ $filterOption = new Bitrix\Main\UI\Filter\Options($list_id);
 $filterData = $filterOption->getFilter([]);
 
 
-if( !empty($filterData) ){
-	foreach ($filterData as $k => $v) {
-		if( Helper::IsFilterItem( $FilterArray, $k ) ){
-			$CorrectFilterData = Helper::GetCorrectFilter($k, $filterData[$k]);
-
-			if( is_array($CorrectFilterData) ){
-				$filter[ $CorrectFilterData['CorrectFilterName'] ] = $CorrectFilterData['CorrectFilterValue'];
-			};
-		}
-	}
-};
-if( !isset($filter) || empty($filter) ) $filter = array();
-
+$filter = Helper::GetCorrectFilter2($filterData);
 $RegionData = $RegionController->GetRegionData($filter);
 ?>
     <h3><?=Loc::getMessage('GLOBAL_MENU_FILTER_TITLE')?></h3>
