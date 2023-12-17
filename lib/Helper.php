@@ -60,7 +60,7 @@ Class Helper{
      * 
      * @return (array || bool)
      */
-    public static function GetCorrectFilter( string $FilterName, string $FilterValue, $FilterNameType="" ){
+    public static function CorrectFilter( string $FilterName, string $FilterValue, $FilterNameType="" ){
 
         if( $FilterName == "" || $FilterValue == "" ) return false;
 
@@ -96,7 +96,7 @@ Class Helper{
      * @return array Корректный массив фильтров для orm
      *  
      */
-    public static function GetCorrectFilter2( array $FilterArray):array{
+    public static function GetCorrectFilter( array $FilterArray):array{
 
         foreach ($FilterArray as $arkey => $arItem) {
             // Проверяем является ли фильтруемое поле одним из orm модуля
@@ -110,7 +110,7 @@ Class Helper{
                 };
 
                 // Получаем валидный массив фильтров
-                $CorrectFilterData = self::GetCorrectFilter( $arkey, $arItem, $FilterNameType );
+                $CorrectFilterData = self::CorrectFilter( $arkey, $arItem, $FilterNameType );
                 if( $CorrectFilterData ){
                     $CorrectFilters[ $CorrectFilterData['CorrectFilterName'] ] = $CorrectFilterData['CorrectFilterValue'];
                 };
@@ -122,14 +122,6 @@ Class Helper{
         if( !isset($CorrectFilters) && empty($CorrectFilters) ) $CorrectFilters = array();
         return $CorrectFilters;
     }
-
-
-
-
-
-
-
-
 
 }
 ?>

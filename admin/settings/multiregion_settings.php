@@ -35,7 +35,7 @@ $filterOption = new Bitrix\Main\UI\Filter\Options($list_id);
 $filterData = $filterOption->getFilter([]);
 
 
-$filter = Helper::GetCorrectFilter2($filterData);
+$filter = Helper::GetCorrectFilter($filterData);
 $RegionData = $RegionController->GetRegionData($filter);
 ?>
     <h3><?=Loc::getMessage('GLOBAL_MENU_FILTER_TITLE')?></h3>
