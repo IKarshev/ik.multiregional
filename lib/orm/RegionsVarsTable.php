@@ -7,6 +7,9 @@ use Bitrix\Main\Entity\IntegerField;
 use Bitrix\Main\Entity\StringField;
 use Bitrix\Main\Entity\BooleanField;
 
+/**
+ * ORM-класс, описывающий таблицу с переменными региона
+ */
 Class RegionsVarsTable extends DataManager
 {
     private const TABLE_NAME = 'IkMultiregional_RegionsVars';

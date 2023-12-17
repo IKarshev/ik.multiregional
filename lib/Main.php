@@ -7,7 +7,9 @@ use Bitrix\Main\Entity;
 use Bitrix\Main\Application;
 use Bitrix\Main\Config\Option;
 
-
+/**
+ * Класс для манипуляции с настройками модуля
+ */
 class Main{
 	
 	function __construct() {

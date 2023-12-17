@@ -6,6 +6,9 @@ use Bitrix\Main\Entity\DataManager;
 use Bitrix\Main\Entity\IntegerField;
 use Bitrix\Main\Entity\StringField;
 
+/**
+ * ORM-класс, описывающий данные переменных региона
+ */
 Class RegionsVarsValueTable extends DataManager
 {
     private const TABLE_NAME = 'IkMultiregional_RegionsVarsValue';

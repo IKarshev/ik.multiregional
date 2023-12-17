@@ -2,7 +2,16 @@
 namespace Ik\Multiregional;
 use Bitrix\Main\Localization\Loc;
 
+/**
+ * Класс-обработчик событий
+ * 
+ * @category Class 
+ */
 Class EventHandler{
+
+    /**
+     * Вывод меню в админку
+     */
     public static function OnBuildGlobalMenuHandler(&$arGlobalMenu, &$arModuleMenu){
         global $USER;
         if(!$USER->IsAdmin()) return;

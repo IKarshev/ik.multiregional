@@ -7,6 +7,9 @@ use Ik\Multiregional\RegionController;
 
 Loader::includeModule('ik.multiregional');
 
+/**
+ * Вспомогательный класс
+ */
 Class Helper{
     /**
      * @return string Дирректория ( bitrix || local ), где находится модуль

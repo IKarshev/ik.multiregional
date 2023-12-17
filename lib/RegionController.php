@@ -15,6 +15,9 @@ use \Bitrix\Main\Entity\ReferenceField;
 
 Loader::includeModule('ik.multiregional');
 
+/**
+ * Класс для манипуляции регионами
+ */
 Class RegionController{
 
     // const DefaultRegionFields = ['ID', 'NAME', 'DOMAIN'];
@@ -165,7 +168,6 @@ Class RegionController{
         };
 
         // Создаем регион
-        /**/
         try {
             $RegionID = RegionsTable::add($RegionDefaultVars)->getId();
         } catch (\Throwable $th) {
