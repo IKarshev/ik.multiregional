@@ -162,8 +162,10 @@ Class RegionController{
             if( in_array($arkey, $regionDefaultFieldList) ){
                 $RegionDefaultVars[$arkey] = $arItem;
             };
-            if( array_key_exists($arkey, $regionVarsFieldList) ){
-                $RegionVars[$arkey] = array_merge($regionVarsFieldList[$arkey], ["VALUE" => $arItem]);
+            if( isset($regionVarsFieldList) && !empty($regionVarsFieldList) ){
+                if( array_key_exists($arkey, $regionVarsFieldList) ){
+                    $RegionVars[$arkey] = array_merge($regionVarsFieldList[$arkey], ["VALUE" => $arItem]);
+                };
             };
         };
 

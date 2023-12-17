@@ -102,6 +102,13 @@ Class Ik_Multiregional extends CModule
             'ik\multiregional\EventHandler',
             'OnBuildGlobalMenuHandler'
         );
+        EventManager::getInstance()->registerEventHandler(
+            'main',
+            'OnBeforeEndBufferContent',
+            $this->MODULE_ID,
+            'ik\multiregional\EventHandler',
+            'OnBeforeEndBufferContentHandler'
+        );
     }
 
     function UnInstallEvents(){
@@ -110,7 +117,15 @@ Class Ik_Multiregional extends CModule
             "OnBuildGlobalMenu",
             $this->MODULE_ID,
             'ik\\multiregional\\EventHandler',
-            'OnBuildGlobalMenuHandler');
+            'OnBuildGlobalMenuHandler'
+        );
+        EventManager::getInstance()->unRegisterEventHandler(
+            'main',
+            'OnBeforeEndBufferContent',
+            $this->MODULE_ID,
+            'ik\multiregional\EventHandler',
+            'OnBeforeEndBufferContentHandler'
+        );
     }
 
     function InstallFiles(){
@@ -126,6 +141,12 @@ Class Ik_Multiregional extends CModule
             true,
             true
         );
+        CopyDirFiles(
+            __DIR__ . '/js',
+            Application::getDocumentRoot() . '/bitrix/js',
+            true,
+            true
+        );
         return true;
     }
 
@@ -135,6 +156,9 @@ Class Ik_Multiregional extends CModule
         );
         Directory::deleteDirectory(
             Application::getDocumentRoot() . '/bitrix/components/IK',
+        );
+        Directory::deleteDirectory(
+            Application::getDocumentRoot() . '/bitrix/js/ik.multiregional',
         );
         return true;
     }

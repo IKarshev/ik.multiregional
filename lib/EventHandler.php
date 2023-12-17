@@ -1,6 +1,8 @@
 <?
 namespace Ik\Multiregional;
+
 use Bitrix\Main\Localization\Loc;
+use Bitrix\Main\Page\Asset;
 
 /**
  * Класс-обработчик событий
@@ -38,5 +40,21 @@ Class EventHandler{
             ],
         ];
     }
+
+    /**
+     * Обработчик 'перед выводом буферизированного контента'
+     */
+    public static function OnBeforeEndBufferContentHandler(){
+        $module_id = pathinfo(dirname(__DIR__))["basename"];
+
+        /**
+         * Подключение js/css файлов модуля в административную часть
+         */
+        if(defined("ADMIN_SECTION") && ADMIN_SECTION === true){
+            Asset::getInstance()->addJs("/bitrix/js/".$module_id."/admin.js");
+        };
+    }
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               
+
 }
 ?>

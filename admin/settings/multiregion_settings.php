@@ -87,18 +87,13 @@ foreach ($RegionData as $arkey => &$arItem) {
 		'data' => $arItem,
 		'actions' => array(
 			[
-				'text'    => 'Просмотр',
-				'default' => true,
-				'onclick' => ''
-			],[
 				'text'    => 'Удалить',
 				'default' => true,
-				'onclick' => ''
+				'onclick' => 'RemoveRegion('.$arItem["ID"].');'
 			]
 		),
 	);
 };
-
 
 $APPLICATION->IncludeComponent('bitrix:main.ui.grid', '', [
 	'GRID_ID' => $list_id,

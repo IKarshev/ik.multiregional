@@ -140,6 +140,7 @@
     font-size: 20px;
     line-height: 28px;
     font-weight: 500;
+    cursor: pointer;
 }
 
 .form_default button[type=submit]:-moz-focus-inner, .form_default label:focus{

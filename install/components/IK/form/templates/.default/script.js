@@ -32,7 +32,9 @@ $(function(){
             mode: 'class',
             data: new FormData( document.getElementById(`${form_id}`) ),
         }).then(function(response){
-            console.log(response);
+            if( response.data ){
+                location.reload();
+            };
         });
 
     });
